@@ -1,0 +1,181 @@
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  exit:    { opacity: 0, y: -20, transition: { duration: 0.3 } },
+}
+
+const inputClass = "w-full px-4 py-3 rounded-xl text-white text-sm outline-none transition-all duration-200"
+const inputStyle = { background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.1)' }
+const inputFocus = (e) => { e.target.style.borderColor='rgba(26,111,212,0.6)'; e.target.style.boxShadow='0 0 0 3px rgba(26,111,212,0.1)' }
+const inputBlur  = (e) => { e.target.style.borderColor='rgba(255,255,255,0.1)'; e.target.style.boxShadow='none' }
+
+export default function Contact() {
+  const [form,   setForm]   = useState({ name:'', email:'', phone:'', message:'' })
+  const [status, setStatus] = useState('idle')
+
+  const update = (k,v) => setForm(f => ({ ...f, [k]:v }))
+
+  const submit = async (e) => {
+    e.preventDefault()
+    setStatus('loading')
+    try {
+      await emailjs.send(
+        'YOUR_SERVICE_ID',
+        'YOUR_CONTACT_TEMPLATE_ID',
+        { ...form },
+        'YOUR_PUBLIC_KEY',
+      )
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+
+      {/* Header */}
+      <section className="relative pt-36 pb-20 overflow-hidden" style={{ background:'#000' }}>
+        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-6 text-center">
+          <motion.p initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.1 }} className="section-label mb-3">Contact Us</motion.p>
+          <motion.h1 initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.2, duration:0.7 }}
+            className="text-4xl md:text-5xl font-black text-white mb-4">
+            Let's Talk <span className="text-gradient">Logistics</span>
+          </motion.h1>
+          <motion.p initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.35 }}
+            className="text-sm max-w-lg mx-auto" style={{ color:'#888' }}>
+            Have a question, need a bespoke quote or want to discuss an account? Our team responds within 15 minutes.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Main */}
+      <section className="py-16 px-6" style={{ background:'#050508' }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity:0, x:-30 }} whileInView={{ opacity:1, x:0 }}
+            viewport={{ once:true }} transition={{ duration:0.7 }}
+          >
+            {status === 'success' ? (
+              <div className="glass rounded-2xl p-10 text-center h-full flex flex-col items-center justify-center"
+                style={{ border:'1px solid rgba(26,111,212,0.3)' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+                  style={{ background:'rgba(26,111,212,0.2)', border:'2px solid #1A6FD4' }}>
+                  <svg className="w-8 h-8" style={{ color:'#4A90E2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Message Sent!</h3>
+                <p className="text-sm" style={{ color:'#888' }}>We'll be in touch within 15 minutes.</p>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="glass rounded-2xl p-8"
+                style={{ border:'1px solid rgba(255,255,255,0.08)' }}>
+                <h2 className="text-xl font-bold text-white mb-6">Send Us a Message</h2>
+                <div className="space-y-4">
+                  {[
+                    { k:'name',    label:'Full Name',     type:'text',  placeholder:'John Smith'         },
+                    { k:'email',   label:'Email Address', type:'email', placeholder:'john@company.co.uk' },
+                    { k:'phone',   label:'Phone Number',  type:'tel',   placeholder:'+44 7700 900000'    },
+                  ].map(f => (
+                    <div key={f.k}>
+                      <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color:'#888' }}>{f.label}</label>
+                      <input type={f.type} value={form[f.k]} onChange={e => update(f.k, e.target.value)}
+                        placeholder={f.placeholder} className={inputClass} style={inputStyle}
+                        onFocus={inputFocus} onBlur={inputBlur} />
+                    </div>
+                  ))}
+                  <div>
+                    <label className="block text-xs font-bold tracking-widest uppercase mb-2" style={{ color:'#888' }}>Message</label>
+                    <textarea value={form.message} onChange={e => update('message', e.target.value)}
+                      placeholder="How can we help you?" rows={4}
+                      className={inputClass + ' resize-none'} style={inputStyle}
+                      onFocus={inputFocus} onBlur={inputBlur} />
+                  </div>
+                </div>
+                <button type="submit" disabled={status === 'loading'}
+                  className="mt-6 w-full py-3.5 rounded-xl font-bold text-sm cursor-pointer btn-primary relative overflow-hidden z-10 disabled:opacity-70">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {status === 'loading' ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                        Send Message
+                      </>
+                    )}
+                  </span>
+                </button>
+                {status === 'error' && (
+                  <p className="text-red-400 text-xs text-center mt-3">
+                    Something went wrong. Please call +44 7700 900000.
+                  </p>
+                )}
+              </form>
+            )}
+          </motion.div>
+
+          {/* Contact info + map placeholder */}
+          <motion.div
+            initial={{ opacity:0, x:30 }} whileInView={{ opacity:1, x:0 }}
+            viewport={{ once:true }} transition={{ duration:0.7, delay:0.15 }}
+            className="space-y-6"
+          >
+            <div className="glass rounded-2xl p-7" style={{ border:'1px solid rgba(255,255,255,0.08)' }}>
+              <h3 className="text-lg font-bold text-white mb-5">Contact Information</h3>
+              <div className="space-y-5">
+                {[
+                  { icon:'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z', title:'Phone', val:'+44 7700 900000', sub:'Mon–Sun, 24/7' },
+                  { icon:'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', title:'Email', val:'info@reallogisticsltd.co.uk', sub:'Response within 15 minutes' },
+                  { icon:'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', title:'Coverage', val:'Nationwide UK', sub:'Every postcode covered' },
+                  { icon:'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', title:'Operating Hours', val:'24 Hours / 7 Days', sub:'365 days a year' },
+                ].map(item => (
+                  <div key={item.title} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center"
+                      style={{ background:'rgba(26,111,212,0.12)', border:'1px solid rgba(26,111,212,0.25)' }}>
+                      <svg className="w-5 h-5" style={{ color:'#4A90E2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold tracking-widest uppercase mb-0.5" style={{ color:'#888' }}>{item.title}</div>
+                      <div className="text-sm font-semibold text-white">{item.val}</div>
+                      <div className="text-xs" style={{ color:'#666' }}>{item.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Map placeholder */}
+            <div className="rounded-2xl overflow-hidden" style={{ height:240, border:'1px solid rgba(26,111,212,0.2)' }}>
+              <img
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80"
+                alt="UK Coverage Map"
+                className="w-full h-full object-cover opacity-60"
+              />
+              <div className="absolute inset-0 flex items-center justify-center"
+                style={{ background:'rgba(0,0,0,0.4)' }}>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </motion.div>
+  )
+}
