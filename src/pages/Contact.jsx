@@ -60,8 +60,8 @@ export default function Contact() {
 
           {/* Form */}
           <motion.div
-            initial={{ opacity:0, x:-30 }} whileInView={{ opacity:1, x:0 }}
-            viewport={{ once:true }} transition={{ duration:0.7 }}
+            initial={{ opacity:0, x:-30 }} animate={{ opacity:1, x:0 }}
+            transition={{ duration:0.6, delay:0.1 }}
           >
             {status === 'success' ? (
               <div className="glass rounded-2xl p-10 text-center h-full flex flex-col items-center justify-center"
@@ -132,8 +132,8 @@ export default function Contact() {
 
           {/* Contact info + map placeholder */}
           <motion.div
-            initial={{ opacity:0, x:30 }} whileInView={{ opacity:1, x:0 }}
-            viewport={{ once:true }} transition={{ duration:0.7, delay:0.15 }}
+            initial={{ opacity:0, x:30 }} animate={{ opacity:1, x:0 }}
+            transition={{ duration:0.6, delay:0.2 }}
             className="space-y-6"
           >
             <div className="glass rounded-2xl p-7" style={{ border:'1px solid rgba(255,255,255,0.08)' }}>
