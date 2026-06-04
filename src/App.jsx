@@ -76,7 +76,12 @@ function WhatsAppBubble() {
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    // Use Lenis immediate scroll so smooth-scroll is bypassed entirely
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true })
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    }
   }, [pathname])
   return null
 }
@@ -106,13 +111,14 @@ export default function App() {
       smooth: true,
     })
     lenisRef.current = lenis
+    window.__lenis = lenis   // expose so ScrollToTop can reach it
 
     function raf(time) {
       lenis.raf(time)
       requestAnimationFrame(raf)
     }
     requestAnimationFrame(raf)
-    return () => lenis.destroy()
+    return () => { lenis.destroy(); window.__lenis = null }
   }, [])
 
   return (
