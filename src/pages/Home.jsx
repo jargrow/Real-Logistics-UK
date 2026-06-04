@@ -9,6 +9,7 @@ import CoverageMap  from '../sections/CoverageMap'
 import Testimonials from '../sections/Testimonials'
 import TrustSignals from '../sections/TrustSignals'
 import CTABanner    from '../sections/CTABanner'
+import FleetGallery from '../sections/FleetGallery'
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -27,6 +28,7 @@ export default function Home() {
       <ServicesGrid />
       <CoverageMap />
       <Testimonials />
+      <FleetGallery />
       <TrustSignals />
       <CTABanner />
     </motion.div>

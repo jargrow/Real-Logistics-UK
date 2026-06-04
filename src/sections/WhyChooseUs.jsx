@@ -128,68 +128,71 @@ export default function WhyChooseUs() {
           </motion.div>
         </div>
 
-        {/* RIGHT — 3 tilt cards */}
-        <div className="flex flex-col gap-5">
-          {cards.map((card, i) => (
-            <motion.div
-              key={card.tag}
-              initial={{ opacity:0, x:40, y:0 }}
+        {/* RIGHT — 3 vertical feature cards (Option B) */}
+        <div className="grid grid-cols-1 gap-4">
+          {[
+            {
+              num:  '01',
+              icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
+              stat: '100%',
+              title:'Full Visibility',
+              desc: 'GPS-tracked fleet, photo confirmation on delivery. Every mile monitored — you see it all in real time.',
+            },
+            {
+              num:  '02',
+              icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+              stat: '15m',
+              title:'Always Reachable',
+              desc: 'Plain English updates, proactive ETA alerts. A real manager picks up every call — no voicemail, no bots.',
+            },
+            {
+              num:  '03',
+              icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+              stat: '98%',
+              title:'Proven Results',
+              desc: "Every delivery sharpens our routes and SLAs. We don't just say we improve — the data proves it.",
+            },
+          ].map((f, i) => (
+            <motion.div key={f.num}
+              initial={{ opacity:0, x:50 }}
               animate={inView ? { opacity:1, x:0 } : {}}
-              transition={{ delay:0.15 + i * 0.15, duration:0.6, ease:[0.22,1,0.36,1] }}
-              whileHover={{ boxShadow:'0 0 30px rgba(26,111,212,0.5)' }}
-              style={{ borderRadius:'16px' }}
+              transition={{ delay:0.15 + i * 0.14, duration:0.65, ease:[0.22,1,0.36,1] }}
+              className="relative rounded-2xl p-6 cursor-pointer overflow-hidden"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                backdropFilter: 'blur(12px)',
+                transition: 'border-color 0.2s, background 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(26,111,212,0.45)'; e.currentTarget.style.background='rgba(26,111,212,0.07)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.07)'; e.currentTarget.style.background='rgba(255,255,255,0.03)' }}
             >
-              <Tilt
-                tiltMaxAngleX={6}
-                tiltMaxAngleY={6}
-                glareEnable={true}
-                glareMaxOpacity={0.06}
-                scale={1.03}
-                transitionSpeed={500}
-              >
-                <div
-                  className="relative rounded-2xl overflow-hidden cursor-pointer group"
-                  style={{
-                    border:'1px solid rgba(255,255,255,0.07)',
-                    background:'rgba(0,0,0,0.5)',
-                    backdropFilter:'blur(12px)',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor='rgba(26,111,212,0.5)'}
-                  onMouseLeave={e => e.currentTarget.style.borderColor='rgba(255,255,255,0.07)'}
-                >
-                  {/* Image strip */}
-                  <div className="absolute inset-0 z-0 overflow-hidden">
-                    <img src={card.img} alt={card.tag}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                      style={{ filter:'brightness(0.22) saturate(0.5)' }}
-                    />
-                  </div>
-                  {/* Blue tint on hover */}
-                  <div className="absolute inset-0 z-[1] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ background:'rgba(26,111,212,0.08)' }} />
+              {/* Blue left accent bar */}
+              <div className="absolute left-0 top-4 bottom-4 w-[3px] rounded-full"
+                style={{ background:'linear-gradient(to bottom,#1A6FD4,#4A90E2)', boxShadow:'0 0 12px rgba(26,111,212,0.6)' }} />
 
-                  <div className="relative z-[2] flex items-center gap-4 p-5">
-                    {/* Tag pill */}
-                    <div className="flex-shrink-0 px-2.5 py-1 rounded-md font-mono-rl text-[10px] tracking-[0.15em] uppercase"
-                      style={{ background:'rgba(26,111,212,0.2)', border:'1px solid rgba(26,111,212,0.35)', color:'#4A90E2' }}>
-                      {card.tag}
-                    </div>
-                    <div>
-                      <h3 className="text-white font-bold text-sm leading-tight mb-1" style={{ fontFamily:'"DM Sans",sans-serif' }}>
-                        {card.title.replace('\n', ' ')}
-                      </h3>
-                      <p className="text-xs leading-relaxed font-dm" style={{ color:'#888' }}>{card.desc}</p>
-                    </div>
-                    {/* Arrow */}
-                    <div className="ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <svg className="w-4 h-4" style={{ color:'#4A90E2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
+              <div className="flex items-start gap-5 pl-3">
+                {/* Icon + stat */}
+                <div className="flex-shrink-0 flex flex-col items-center gap-2">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    style={{ background:'rgba(26,111,212,0.15)', border:'1px solid rgba(26,111,212,0.3)' }}>
+                    <svg className="w-5 h-5" style={{ color:'#4A90E2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d={f.icon} />
+                    </svg>
                   </div>
+                  <span className="font-bebas text-xl leading-none"
+                    style={{ color:'#1A6FD4', textShadow:'0 0 10px rgba(26,111,212,0.5)' }}>{f.stat}</span>
                 </div>
-              </Tilt>
+
+                {/* Text */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="font-mono-rl text-[9px] tracking-[0.2em] uppercase" style={{ color:'#1A6FD4' }}>{f.num}</span>
+                    <h3 className="font-dm font-bold text-white text-sm">{f.title}</h3>
+                  </div>
+                  <p className="font-dm text-xs leading-relaxed" style={{ color:'#888' }}>{f.desc}</p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

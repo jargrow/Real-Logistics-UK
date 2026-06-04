@@ -100,17 +100,74 @@ export default function About() {
           >
             <div className="grid grid-cols-2 gap-4">
               {[
-                'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&q=80',
-                'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=80',
-                'https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&q=80',
-                'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80',
-              ].map((url, i) => (
-                <div key={i} className="rounded-xl overflow-hidden" style={{ aspectRatio:'4/3' }}>
-                  <img src={url} alt="Real Logistics fleet" className="w-full h-full object-cover" loading="lazy" />
-                </div>
+                { src:'/images/gallery-01.webp', alt:'Real Logistics team and fleet' },
+                { src:'/images/gallery-03.webp', alt:'Driver making a delivery' },
+                { src:'/images/gallery-08.webp', alt:'Driver with tracking device' },
+                { src:'/images/gallery-07.webp', alt:'Fleet depot at sunrise' },
+              ].map((img, i) => (
+                <motion.div key={i}
+                  initial={{ opacity:0, scale:0.95 }} whileInView={{ opacity:1, scale:1 }}
+                  viewport={{ once:true }} transition={{ delay: i * 0.08, duration:0.5 }}
+                  className="rounded-xl overflow-hidden group"
+                  style={{ aspectRatio:'4/3', border:'1px solid rgba(26,111,212,0.12)' }}>
+                  <img src={img.src} alt={img.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy" />
+                </motion.div>
               ))}
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Fleet section */}
+      <section className="py-24 px-6 overflow-hidden" style={{ background:'#000' }}>
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }}
+            viewport={{ once:true }} transition={{ duration:0.7 }}
+            className="text-center mb-14"
+          >
+            <p className="section-label mb-3">Our Fleet</p>
+            <h2 className="font-bebas text-white leading-none" style={{ fontSize:'clamp(42px,7vw,80px)' }}>
+              THE TEAM <span style={{ color:'#1A6FD4', textShadow:'0 0 30px rgba(26,111,212,0.4)' }}>BEHIND EVERY DELIVERY</span>
+            </h2>
+            <p className="font-dm text-sm mt-4 max-w-lg mx-auto leading-relaxed" style={{ color:'#888' }}>
+              Real vans. Real drivers. Real reliability — across every UK nation, every day of the year.
+            </p>
+          </motion.div>
+
+          {/* Even 3×2 grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { src:'/images/gallery-01.webp', label:'Our Team',         sub:'Proud to serve the UK' },
+              { src:'/images/gallery-04.webp', label:'On the Move',      sub:'UK-wide every day' },
+              { src:'/images/gallery-02.webp', label:'Our Fleet',        sub:'Branded & road-ready' },
+              { src:'/images/gallery-05.webp', label:'Night Shift',      sub:'24/7 — no exceptions' },
+              { src:'/images/gallery-03.webp', label:'Door to Door',     sub:'Personal every time' },
+              { src:'/images/gallery-07.webp', label:'Depot Ready',      sub:'Prepped at sunrise' },
+            ].map((img, i) => (
+              <motion.div key={img.src}
+                initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ duration:0.55, delay: i * 0.09 }}
+                className="relative rounded-2xl overflow-hidden group"
+                style={{ aspectRatio:'16/10', border:'1px solid rgba(26,111,212,0.15)' }}
+              >
+                <img src={img.src} alt={img.label}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0"
+                  style={{ background:'linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 58%)' }} />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background:'rgba(26,111,212,0.07)' }} />
+                <div className="absolute bottom-4 left-4">
+                  <p className="font-bebas text-white text-lg leading-none tracking-wider">{img.label}</p>
+                  <p className="font-mono-rl text-[9px] tracking-widest uppercase mt-0.5" style={{ color:'#4A90E2' }}>{img.sub}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -160,14 +160,27 @@ export default function HowItWorks() {
         </div>
 
         {/* Footer note */}
-        <motion.p
-          initial={{ opacity:0 }} animate={inView ? { opacity:1 } : {}}
+        <motion.div
+          initial={{ opacity:0, y:10 }} animate={inView ? { opacity:1, y:0 } : {}}
           transition={{ delay:0.8 }}
-          className="text-center mt-14 font-mono-rl text-xs tracking-widest"
-          style={{ color:'#888' }}
+          className="flex justify-center mt-14"
         >
-          AVERAGE RESPONSE TIME: UNDER 15 MINUTES
-        </motion.p>
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
+            style={{
+              background: 'rgba(26,111,212,0.1)',
+              border: '1px solid rgba(26,111,212,0.35)',
+              boxShadow: '0 0 24px rgba(26,111,212,0.2), 0 0 48px rgba(26,111,212,0.08)',
+            }}>
+            <span className="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
+              style={{ background:'#4A90E2', boxShadow:'0 0 8px rgba(74,144,226,0.9)' }} />
+            <span className="font-mono-rl text-[11px] tracking-[0.22em] uppercase"
+              style={{ color:'#4A90E2', textShadow:'0 0 12px rgba(74,144,226,0.6)' }}>
+              Average response time: under 15 minutes
+            </span>
+            <span className="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
+              style={{ background:'#4A90E2', boxShadow:'0 0 8px rgba(74,144,226,0.9)', animationDelay:'0.5s' }} />
+          </div>
+        </motion.div>
       </div>
     </section>
   )

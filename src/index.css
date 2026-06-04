@@ -204,6 +204,12 @@ body  {
 .swiper-testimonial .swiper-pagination-bullet        { background:#888; opacity:1; }
 .swiper-testimonial .swiper-pagination-bullet-active { background:#1A6FD4; }
 
+/* ── Swiper fleet gallery ── */
+.swiper-fleet .swiper-slide              { opacity:0.55; transition:opacity 0.4s; }
+.swiper-fleet .swiper-slide-active       { opacity:1; }
+.swiper-fleet .swiper-pagination-bullet        { background:rgba(255,255,255,0.25); opacity:1; width:6px; height:6px; }
+.swiper-fleet .swiper-pagination-bullet-active { background:#1A6FD4; width:20px; border-radius:3px; box-shadow:0 0 8px rgba(26,111,212,0.8); }
+
 /* ── Hero grid overlay ── */
 .hero-grid-bg {
   background-image:

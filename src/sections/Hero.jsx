@@ -335,29 +335,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Bottom stats bar ── */}
-        <motion.div
-          className="mx-6 md:mx-14 lg:mx-20 mb-6 rounded-2xl overflow-hidden"
-          style={{ background:t.bar.bg, border:`1px solid ${t.bar.border}`,
-            backdropFilter:'blur(24px)', WebkitBackdropFilter:'blur(24px)' }}
-          initial={reduced ? false : { opacity:0, y:28 }} animate={{ opacity:1, y:0 }}
-          transition={{ delay:1.6, duration:0.6, ease:EASE }}>
-          <div className="grid grid-cols-2 sm:grid-cols-4">
-            {[
-              { v:'500+', l:'Monthly Deliveries' },
-              { v:'98%',  l:'On-Time Rate'       },
-              { v:'24/7', l:'Always Available'   },
-              { v:'4',    l:'UK Nations Covered' },
-            ].map((s, i) => (
-              <div key={s.l} className="flex flex-col items-center justify-center py-4 px-6 gap-0.5"
-                style={{ borderLeft: i > 0 ? `1px solid ${t.bar.div}` : 'none' }}>
-                <span className="font-bebas text-[26px] leading-none" style={{ color:'#1A6FD4' }}>{s.v}</span>
-                <span className="font-dm text-[11px] text-center" style={{ color:t.bar.muted }}>{s.l}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
       </div>
     </section>
   )
