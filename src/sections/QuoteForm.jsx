@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import emailjs from '@emailjs/browser'
+
+// Paste your Google Apps Script Web App URL here after deploying
+const SHEET_URL = 'YOUR_GOOGLE_SCRIPT_URL'
 
 const TOTAL = 6
 
@@ -284,29 +286,35 @@ export default function QuoteForm({ standalone = false }) {
   const submit = async () => {
     if (!validate()) return
     setStatus('loading')
+
+    const timeframeLabel = form.timeframe === 'Scheduled Date' && form.scheduledDate
+      ? `Scheduled: ${new Date(form.scheduledDate).toLocaleString('en-GB', { dateStyle: 'long', timeStyle: 'short' })}`
+      : form.timeframe
+
     try {
-      await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        {
-          shipment_type:        form.shipmentType,
-          from_city:            fromCity,
-          to_city:              toCity,
-          timeframe:            form.timeframe,
-          scheduled_date:       form.scheduledDate || 'N/A',
-          weight:               form.weight,
-          special_requirements: form.special.join(', ') || 'None',
-          customer_name:        form.name,
-          customer_phone:       form.phone,
-          customer_email:       form.email  || 'Not provided',
-          customer_company:     form.company || 'N/A',
-        },
-        'YOUR_PUBLIC_KEY',
-      )
+      await fetch(SHEET_URL, {
+        method:  'POST',
+        // no-cors avoids preflight; Apps Script still receives the body
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body:    JSON.stringify({
+          name:         form.name,
+          phone:        form.phone,
+          email:        form.email    || '',
+          company:      form.company  || '',
+          shipmentType: form.shipmentType,
+          fromCity,
+          toCity,
+          timeframe:    timeframeLabel,
+          weight:       form.weight,
+          special:      form.special.join(', ') || 'None',
+        }),
+      })
     } catch (err) {
-      // EmailJS not configured yet — log silently, still show thank-you
-      console.warn('EmailJS not configured:', err)
+      // Network error — log silently, still show thank-you
+      console.warn('Sheet submission error:', err)
     }
+
     setStatus('success')
   }
 
