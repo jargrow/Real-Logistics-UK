@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Paste your Google Apps Script Web App URL here after deploying
-const SHEET_URL = 'YOUR_GOOGLE_SCRIPT_URL'
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwN2goJVk1l358e_8wvejFkzw8jIXizP9f-bghHCyYZpflSawzhztVWY3goRbn3VfNIjw/exec'
 
 const TOTAL = 6
 
