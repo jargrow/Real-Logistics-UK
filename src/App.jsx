@@ -106,8 +106,8 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 0.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.1,
+      easing: (t) => t,
       smooth: true,
     })
     lenisRef.current = lenis
