@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import Lenis from '@studio-freight/lenis'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
@@ -76,12 +75,7 @@ function WhatsAppBubble() {
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    // Use Lenis immediate scroll so smooth-scroll is bypassed entirely
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { immediate: true })
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [pathname])
   return null
 }
@@ -102,24 +96,6 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
-  const lenisRef = useRef(null)
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.1,
-      easing: (t) => t,
-      smooth: true,
-    })
-    lenisRef.current = lenis
-    window.__lenis = lenis   // expose so ScrollToTop can reach it
-
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-    return () => { lenis.destroy(); window.__lenis = null }
-  }, [])
 
   return (
     <BrowserRouter>
