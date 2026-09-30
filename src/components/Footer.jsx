@@ -140,7 +140,7 @@ export default function Footer() {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop:'1px solid rgba(255,255,255,0.06)' }}>
           <p className="text-[#555] text-xs">
-            © 2025 Real Logistics Limited. All Rights Reserved.
+            © 2025 Real Logistics Limited. All Rights Reserved. | Company No. 14750962 | VAT No. 516 5584 76
           </p>
           <div className="flex items-center gap-6">
             {['Privacy Policy','Terms of Service','Cookie Policy'].map(t => (
