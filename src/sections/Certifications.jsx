@@ -69,23 +69,25 @@ export default function Certifications() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: i * 0.12, duration: 0.55 }}
                 className="group flex flex-col rounded-xl overflow-hidden cursor-pointer"
-                style={{ background: '#fff', border: '1px solid #E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+                style={{ background: '#0D1B2A', border: '1px solid #1E2D3D', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
                 onClick={() => setOpen(c)}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.12)'; e.currentTarget.style.borderColor = '#CBD5E1' }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)'; e.currentTarget.style.borderColor = '#E2E8F0' }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.3)'; e.currentTarget.style.borderColor = '#1A6FD4' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'; e.currentTarget.style.borderColor = '#1E2D3D' }}
               >
-                {/* Document thumbnail */}
-                <div className="relative overflow-hidden" style={{ aspectRatio: '3/4', background: '#F1F5F9' }}>
-                  <img
-                    src={c.img}
-                    alt={`${c.standard} Certificate`}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
+                {/* Document thumbnail — grey frame so white cert floats */}
+                <div className="relative p-5 pb-4" style={{ background: '#D5DDE8' }}>
+                  <div className="relative overflow-hidden rounded-sm"
+                    style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12)' }}>
+                    <img
+                      src={c.img}
+                      alt={`${c.standard} Certificate`}
+                      className="w-full block transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: 'rgba(13,27,42,0.45)' }}>
+                  <div className="absolute inset-0 flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl">
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white"
-                      style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.35)', backdropFilter: 'blur(8px)' }}>
+                      style={{ background: 'rgba(26,111,212,0.9)', backdropFilter: 'blur(8px)' }}>
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -95,22 +97,23 @@ export default function Certifications() {
                   </div>
                 </div>
 
-                {/* Card info */}
-                <div className="p-5 flex flex-col gap-1">
-                  <div className="flex items-start justify-between gap-2">
+                {/* Card info — dark navy */}
+                <div className="p-5 flex flex-col gap-0">
+                  <div className="flex items-start justify-between gap-2 mb-3">
                     <div>
-                      <div className="text-base font-black" style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif' }}>
+                      <div className="text-base font-black text-white" style={{ fontFamily: '"DM Sans",sans-serif', letterSpacing: '-0.01em' }}>
                         {c.standard}
                       </div>
-                      <div className="text-sm font-medium" style={{ color: '#475569' }}>{c.title}</div>
+                      <div className="text-sm font-medium mt-0.5" style={{ color: '#7A9BB5' }}>{c.title}</div>
                     </div>
-                    <svg className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#1A6FD4' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#1A6FD4' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <div className="flex items-center justify-between mt-2 pt-2" style={{ borderTop: '1px solid #F1F5F9' }}>
-                    <span className="text-xs font-mono" style={{ color: '#94A3B8' }}>No. {c.certNo}</span>
-                    <span className="text-xs" style={{ color: '#94A3B8' }}>Valid to {c.expiry}</span>
+                  <div className="flex items-center justify-between pt-3"
+                    style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                    <span className="text-xs font-mono" style={{ color: '#4A6FA5' }}>No. {c.certNo}</span>
+                    <span className="text-xs" style={{ color: '#4A6FA5' }}>Valid to {c.expiry}</span>
                   </div>
                 </div>
               </motion.div>
