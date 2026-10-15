@@ -150,45 +150,62 @@ export default function Certifications() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8"
-            style={{ background: 'rgba(13,27,42,0.85)', backdropFilter: 'blur(8px)' }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-3 md:p-8"
+            style={{ background: 'rgba(13,27,42,0.88)', backdropFilter: 'blur(8px)' }}
             onClick={() => setOpen(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.93, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.25, type: 'spring', stiffness: 260, damping: 22 }}
-              className="relative max-w-2xl w-full rounded-2xl overflow-hidden"
-              style={{ background: '#fff', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}
+              exit={{ scale: 0.93, opacity: 0 }}
+              transition={{ duration: 0.22, type: 'spring', stiffness: 280, damping: 24 }}
+              className="flex flex-col w-full rounded-2xl overflow-hidden"
+              style={{
+                maxWidth: 560,
+                maxHeight: '92vh',
+                background: '#fff',
+                boxShadow: '0 32px 80px rgba(0,0,0,0.55)',
+              }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Close */}
-              <button
-                className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
-                style={{ background: 'rgba(0,0,0,0.12)' }}
-                onClick={() => setOpen(null)}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,0,0,0.22)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,0,0,0.12)'}
-              >
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-
-              <img
-                src={open.img}
-                alt={`${open.standard} Certificate`}
-                className="w-full block"
-              />
-
-              <div className="px-6 py-4 flex items-center justify-between"
-                style={{ borderTop: '1px solid #E2E8F0' }}>
+              {/* Pinned header — always visible, contains close button */}
+              <div className="flex items-center justify-between px-5 py-3 flex-shrink-0"
+                style={{ borderBottom: '1px solid #E2E8F0', background: '#fff' }}>
                 <div>
-                  <div className="font-black text-base" style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif' }}>{open.standard} — {open.title}</div>
-                  <div className="text-xs" style={{ color: '#94A3B8' }}>Certificate No. {open.certNo} · Valid to {open.expiry}</div>
+                  <div className="font-black text-sm" style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif' }}>
+                    {open.standard} — {open.title}
+                  </div>
+                  <div className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>
+                    Certificate No. {open.certNo}
+                  </div>
                 </div>
-                <div className="text-xs text-right" style={{ color: '#94A3B8' }}>British Assessment Bureau<br/>UKAS No. 8289</div>
+                <button
+                  className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ml-3"
+                  style={{ background: '#F1F5F9', border: '1px solid #E2E8F0' }}
+                  onClick={() => setOpen(null)}
+                  onMouseEnter={e => e.currentTarget.style.background = '#E2E8F0'}
+                  onMouseLeave={e => e.currentTarget.style.background = '#F1F5F9'}
+                >
+                  <svg className="w-4 h-4" style={{ color: '#475569' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Scrollable certificate image */}
+              <div className="overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <img
+                  src={open.img}
+                  alt={`${open.standard} Certificate`}
+                  style={{ width: '100%', display: 'block' }}
+                />
+              </div>
+
+              {/* Pinned footer — always visible */}
+              <div className="flex items-center justify-between px-5 py-3 flex-shrink-0"
+                style={{ borderTop: '1px solid #E2E8F0', background: '#F8FAFC' }}>
+                <span className="text-xs" style={{ color: '#64748B' }}>Valid to {open.expiry}</span>
+                <span className="text-xs" style={{ color: '#94A3B8' }}>British Assessment Bureau · UKAS No. 8289</span>
               </div>
             </motion.div>
           </motion.div>
