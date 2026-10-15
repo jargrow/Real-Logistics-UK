@@ -136,9 +136,35 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        {/* ISO badges row */}
+        <div className="pt-8 flex flex-wrap items-center justify-center gap-3 mb-6"
           style={{ borderTop:'1px solid rgba(255,255,255,0.06)' }}>
+          {[
+            { label:'ISO 9001:2015', color:'#1A6FD4', title:'Quality Management' },
+            { label:'ISO 14001:2015', color:'#16A34A', title:'Environmental Management' },
+            { label:'ISO 45001:2018', color:'#D97706', title:'Health & Safety' },
+          ].map(b => (
+            <div key={b.label}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+              style={{ background:`${b.color}12`, border:`1px solid ${b.color}35`, color: b.color }}>
+              <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {b.label}
+              <span className="text-[#555] font-normal hidden sm:inline">· {b.title}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs"
+            style={{ background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.08)', color:'#555' }}>
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            UKAS Accredited No. 8289
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[#555] text-xs">
             © 2025 Real Logistics Limited. All Rights Reserved. | Company No. 14750962 | VAT No. 516 5584 76
           </p>

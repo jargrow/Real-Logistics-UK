@@ -7,8 +7,9 @@ import HowItWorks   from '../sections/HowItWorks'
 import ServicesGrid from '../sections/ServicesGrid'
 import CoverageMap  from '../sections/CoverageMap'
 import Testimonials from '../sections/Testimonials'
-import TrustSignals from '../sections/TrustSignals'
-import CTABanner    from '../sections/CTABanner'
+import TrustSignals    from '../sections/TrustSignals'
+import Certifications  from '../sections/Certifications'
+import CTABanner       from '../sections/CTABanner'
 import FleetGallery from '../sections/FleetGallery'
 
 const pageVariants = {
@@ -30,6 +31,7 @@ export default function Home() {
       <Testimonials />
       <FleetGallery />
       <TrustSignals />
+      <Certifications />
       <CTABanner />
     </motion.div>
   )
