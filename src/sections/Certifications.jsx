@@ -1,173 +1,199 @@
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 
 const certs = [
   {
-    standard: 'ISO 9001:2015',
-    title: 'Quality Management',
-    benefit: 'Every delivery handled to a documented, audited quality standard.',
-    certNo: '275507',
-    expiry: '30 September 2029',
-    color: '#1A6FD4',
-    glow: 'rgba(26,111,212,0.35)',
-    icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
+    standard:  'ISO 9001:2015',
+    title:     'Quality Management',
+    certNo:    '275507',
+    expiry:    '30 September 2029',
+    img:       '/images/cert-9001.jpg',
   },
   {
-    standard: 'ISO 14001:2015',
-    title: 'Environmental Management',
-    benefit: 'Committed to reducing the environmental impact of every route we run.',
-    certNo: '275643',
-    expiry: '30 April 2029',
-    color: '#16A34A',
-    glow: 'rgba(22,163,74,0.35)',
-    icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    standard:  'ISO 14001:2015',
+    title:     'Environmental Management',
+    certNo:    '275643',
+    expiry:    '30 April 2029',
+    img:       '/images/cert-14001.jpg',
   },
   {
-    standard: 'ISO 45001:2018',
-    title: 'Health & Safety',
-    benefit: 'Rigorous safety protocols protecting our drivers and your cargo at every stage.',
-    certNo: '275644',
-    expiry: '13 October 2029',
-    color: '#D97706',
-    glow: 'rgba(217,119,6,0.35)',
-    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    standard:  'ISO 45001:2018',
+    title:     'Occupational Health & Safety',
+    certNo:    '275644',
+    expiry:    '13 October 2029',
+    img:       '/images/cert-45001.jpg',
   },
 ]
 
 export default function Certifications() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const ref         = useRef(null)
+  const inView      = useInView(ref, { once: true, margin: '-60px' })
+  const [open, setOpen] = useState(null)
 
   return (
-    <section ref={ref} className="relative py-24 overflow-hidden"
-      style={{ background: '#04060D', borderTop: '1px solid rgba(26,111,212,0.12)' }}>
+    <>
+      <section ref={ref} className="relative py-24 overflow-hidden"
+        style={{ background: '#F7F8FA', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
 
-      {/* Grid background */}
-      <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
 
-      {/* Top glow line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: 'linear-gradient(90deg,transparent,rgba(26,111,212,0.5) 40%,rgba(74,144,226,0.5) 60%,transparent)' }} />
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55 }}
+            className="mb-14"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px flex-1 max-w-[40px]" style={{ background: '#1A6FD4' }} />
+              <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: '#1A6FD4' }}>
+                Accreditation &amp; Certification
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black mb-3"
+              style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif', letterSpacing: '-0.02em' }}>
+              Independently Certified
+            </h2>
+            <p className="text-base max-w-2xl" style={{ color: '#64748B', lineHeight: 1.7 }}>
+              Real Logistics Limited holds three ISO certifications, independently assessed and
+              registered by British Assessment Bureau Limited — part of the Amtivo Group,
+              accredited by UKAS (No. 8289).
+            </p>
+          </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Certificate grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {certs.map((c, i) => (
+              <motion.div key={c.standard}
+                initial={{ opacity: 0, y: 32 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: i * 0.12, duration: 0.55 }}
+                className="group flex flex-col rounded-xl overflow-hidden cursor-pointer"
+                style={{ background: '#fff', border: '1px solid #E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+                onClick={() => setOpen(c)}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.12)'; e.currentTarget.style.borderColor = '#CBD5E1' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)'; e.currentTarget.style.borderColor = '#E2E8F0' }}
+              >
+                {/* Document thumbnail */}
+                <div className="relative overflow-hidden" style={{ aspectRatio: '3/4', background: '#F1F5F9' }}>
+                  <img
+                    src={c.img}
+                    alt={`${c.standard} Certificate`}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: 'rgba(13,27,42,0.45)' }}>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white"
+                      style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.35)', backdropFilter: 'blur(8px)' }}>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                      View Certificate
+                    </div>
+                  </div>
+                </div>
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5 text-xs font-bold tracking-[0.2em] uppercase"
-            style={{ background: 'rgba(26,111,212,0.1)', border: '1px solid rgba(26,111,212,0.25)', color: '#4A90E2' }}>
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            UKAS Accredited · British Assessment Bureau
+                {/* Card info */}
+                <div className="p-5 flex flex-col gap-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="text-base font-black" style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif' }}>
+                        {c.standard}
+                      </div>
+                      <div className="text-sm font-medium" style={{ color: '#475569' }}>{c.title}</div>
+                    </div>
+                    <svg className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#1A6FD4' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <div className="flex items-center justify-between mt-2 pt-2" style={{ borderTop: '1px solid #F1F5F9' }}>
+                    <span className="text-xs font-mono" style={{ color: '#94A3B8' }}>No. {c.certNo}</span>
+                    <span className="text-xs" style={{ color: '#94A3B8' }}>Valid to {c.expiry}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4"
-            style={{ fontFamily: '"DM Sans",sans-serif', letterSpacing: '-0.02em' }}>
-            ISO Certified.<br className="sm:hidden" /> <span style={{ color: '#4A90E2' }}>UKAS Accredited.</span>
-          </h2>
-          <p className="text-[#888] text-lg max-w-2xl mx-auto leading-relaxed">
-            All three international standards independently audited and certified — covering quality, environment, and safety across every service we provide.
-          </p>
-        </motion.div>
 
-        {/* Certificate cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
-          {certs.map((c, i) => (
-            <motion.div key={c.standard}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.15, duration: 0.6, type: 'spring', stiffness: 180 }}
-              className="relative group rounded-2xl overflow-hidden cursor-default"
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: `1px solid rgba(255,255,255,0.08)`,
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.border = `1px solid ${c.color}55`
-                e.currentTarget.style.boxShadow = `0 0 40px ${c.glow}`
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.08)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
+          {/* Footer strip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="flex flex-wrap items-center gap-x-8 gap-y-2 pt-6"
+            style={{ borderTop: '1px solid #E2E8F0' }}
+          >
+            {[
+              { label: 'Certifying body', value: 'British Assessment Bureau Ltd t/a Amtivo' },
+              { label: 'UKAS accreditation', value: 'No. 8289' },
+              { label: 'Certified', value: '14 October 2026' },
+              { label: 'Subject to', value: 'Annual assessments' },
+            ].map(item => (
+              <div key={item.label} className="flex items-baseline gap-1.5">
+                <span className="text-xs font-semibold" style={{ color: '#94A3B8' }}>{item.label}:</span>
+                <span className="text-xs font-semibold" style={{ color: '#475569' }}>{item.value}</span>
+              </div>
+            ))}
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8"
+            style={{ background: 'rgba(13,27,42,0.85)', backdropFilter: 'blur(8px)' }}
+            onClick={() => setOpen(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.25, type: 'spring', stiffness: 260, damping: 22 }}
+              className="relative max-w-2xl w-full rounded-2xl overflow-hidden"
+              style={{ background: '#fff', boxShadow: '0 32px 80px rgba(0,0,0,0.5)' }}
+              onClick={e => e.stopPropagation()}
             >
-              {/* Top colour bar */}
-              <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${c.color}, transparent)` }} />
+              {/* Close */}
+              <button
+                className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+                style={{ background: 'rgba(0,0,0,0.12)' }}
+                onClick={() => setOpen(null)}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,0,0,0.22)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,0,0,0.12)'}
+              >
+                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
 
-              <div className="p-8">
-                {/* Icon */}
-                <div className="w-16 h-16 rounded-xl flex items-center justify-center mb-6 transition-all duration-300"
-                  style={{ background: `${c.color}18`, border: `1px solid ${c.color}40` }}>
-                  <svg className="w-8 h-8" style={{ color: c.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d={c.icon} />
-                  </svg>
+              <img
+                src={open.img}
+                alt={`${open.standard} Certificate`}
+                className="w-full block"
+              />
+
+              <div className="px-6 py-4 flex items-center justify-between"
+                style={{ borderTop: '1px solid #E2E8F0' }}>
+                <div>
+                  <div className="font-black text-base" style={{ color: '#0D1B2A', fontFamily: '"DM Sans",sans-serif' }}>{open.standard} — {open.title}</div>
+                  <div className="text-xs" style={{ color: '#94A3B8' }}>Certificate No. {open.certNo} · Valid to {open.expiry}</div>
                 </div>
-
-                {/* Standard */}
-                <div className="text-2xl font-black mb-1" style={{ color: c.color, fontFamily: '"DM Sans",sans-serif', letterSpacing: '-0.01em' }}>
-                  {c.standard}
-                </div>
-
-                {/* Title */}
-                <div className="text-white font-bold text-lg mb-3" style={{ fontFamily: '"DM Sans",sans-serif' }}>
-                  {c.title}
-                </div>
-
-                {/* Benefit */}
-                <p className="text-[#888] text-sm leading-relaxed mb-6">
-                  {c.benefit}
-                </p>
-
-                {/* Divider */}
-                <div className="h-px w-full mb-5" style={{ background: 'rgba(255,255,255,0.06)' }} />
-
-                {/* Meta */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#555] text-xs uppercase tracking-widest">Cert No.</span>
-                    <span className="text-[#aaa] text-xs font-mono">{c.certNo}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#555] text-xs uppercase tracking-widest">Valid to</span>
-                    <span className="text-[#aaa] text-xs">{c.expiry}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#555] text-xs uppercase tracking-widest">Issued by</span>
-                    <span className="text-[#aaa] text-xs">British Assessment Bureau</span>
-                  </div>
-                </div>
+                <div className="text-xs text-right" style={{ color: '#94A3B8' }}>British Assessment Bureau<br/>UKAS No. 8289</div>
               </div>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Bottom trust bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.55, duration: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center"
-        >
-          {[
-            { label: 'Certified since', value: 'October 2026' },
-            { label: 'Accreditation body', value: 'UKAS No. 8289' },
-            { label: 'Scope', value: 'Courier & light goods transport, Great Britain' },
-          ].map(item => (
-            <div key={item.label} className="flex items-center gap-2">
-              <svg className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#4A90E2' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-[#555] text-xs">{item.label}:</span>
-              <span className="text-[#888] text-xs font-semibold">{item.value}</span>
-            </div>
-          ))}
-        </motion.div>
-
-      </div>
-    </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
